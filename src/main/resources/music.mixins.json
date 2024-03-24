@@ -6,7 +6,8 @@
   "mixins": [
     "RenderEngineMixin",
     "SoundManagerMixin",
-    "SoundPoolAccessor"
+    "SoundPoolAccessor",
+    "TPCustomAccessor"
   ],
   "client": [
   ],

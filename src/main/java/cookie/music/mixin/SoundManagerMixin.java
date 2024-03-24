@@ -2,6 +2,7 @@ package cookie.music.mixin;
 
 import cookie.music.IMusicLoader;
 import cookie.music.MusicLoader;
+import cookie.music.UnzipUtility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.option.GameSettings;
 import net.minecraft.client.sound.SoundManager;
@@ -15,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.util.zip.ZipFile;
 
 @Mixin(value = SoundManager.class, remap = false)
 public abstract class SoundManagerMixin implements IMusicLoader {
@@ -28,15 +31,34 @@ public abstract class SoundManagerMixin implements IMusicLoader {
 	@Shadow
 	private Minecraft mc;
 
+	@Shadow
+	public abstract void playRandomMusicIfReady();
+
+	@Shadow
+	private int ticksBeforeMusic;
+
 	@Unique
 	public void bta_music_loader$loadTexturePackAudio(SoundPool soundPool) {
 		mc = Minecraft.getMinecraft(Minecraft.class);
 
-		String musicLoc = "/music";
+		File temp = new File(mc.getMinecraftDir() + "/temp/");
+		UnzipUtility.deleteFolder(temp);
+
+		String musicLoc = "/music/";
 		try (InputStream stream = mc.texturePackList.selectedTexturePack.getResourceAsStream(musicLoc)) {
 			MusicLoader.LOGGER.info("Music folder found, gathering files and attempting to clear the music sound pool...");
 
-			File music = new File(mc.getMinecraftDir() + "/texturepacks/" + mc.texturePackList.selectedTexturePack.fileName + "/" + musicLoc);
+
+
+			File music;
+			if (mc.texturePackList.selectedTexturePack.fileName.endsWith(".zip")){
+				temp.mkdirs();
+				UnzipUtility.unzip(mc.getMinecraftDir() + "/texturepacks/" + mc.texturePackList.selectedTexturePack.fileName, temp.getPath());
+				music = new File(temp, musicLoc);
+			} else {
+				music = new File(mc.getMinecraftDir() + "/texturepacks/" + mc.texturePackList.selectedTexturePack.fileName + "/" + musicLoc);
+			}
+
 			File[] list = music.listFiles();
 
 			if (list != null && list.length > 0) {

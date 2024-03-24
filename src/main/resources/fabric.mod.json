@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "music",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This mod aims to help new BTA modders.",
+  "name": "MusicLoader",
+  "description": "A simple 'resource pack' implementation for BTA.",
   "authors": [
-    "Turnip Labs"
+    "Cookie"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "sources": "https://github.com/FatherCheese/bta-music-loader",
+		"issues": "https://github.com/FatherCheese/bta-music-loader/issues"
   },
 
 	"icon": "icon.png",
@@ -19,20 +19,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-			"turniplabs.examplemod.ExampleMod"
-    ],
-		"beforeGameStart": [
-			"turniplabs.examplemod.ExampleMod"
-		],
-		"afterGameStart": [
-			"turniplabs.examplemod.ExampleMod"
-		],
-		"recipesReady": [
-			"turniplabs.examplemod.ExampleMod"
-		]
+			"cookie.music.MusicLoader"
+    ]
 	},
   "mixins": [
-      "examplemod.mixins.json"
+    "music.mixins.json"
   ],
 
   "depends": {

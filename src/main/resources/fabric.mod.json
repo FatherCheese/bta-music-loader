@@ -8,6 +8,9 @@
   "authors": [
     "Cookie"
   ],
+	"contributors": [
+		"Useless (zip support)"
+	],
   "contact": {
     "sources": "https://github.com/FatherCheese/bta-music-loader",
 		"issues": "https://github.com/FatherCheese/bta-music-loader/issues"

@@ -72,7 +72,6 @@ public abstract class SoundManagerMixin implements IMusicLoader {
                 }
 			} else {
 				MusicLoader.LOGGER.error("Texture pack music folder is empty!");
-				MusicLoader.LOGGER.info(music.getPath());
 				customResources = false;
 			}
 		} catch (Exception ignored) {

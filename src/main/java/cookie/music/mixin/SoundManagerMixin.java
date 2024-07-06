@@ -45,18 +45,18 @@ public abstract class SoundManagerMixin implements IMusicLoader {
 		UnzipUtility.deleteFolder(temp);
 
 		String musicLoc = "/music/";
-		try (InputStream stream = mc.texturePackList.selectedTexturePack.getResourceAsStream(musicLoc)) {
+		try (InputStream stream = mc.texturePackList.getResourceAsStream(musicLoc)) {
 			MusicLoader.LOGGER.info("Music folder found, gathering files and attempting to clear the music sound pool...");
 
 
 
 			File music;
-			if (mc.texturePackList.selectedTexturePack.fileName.endsWith(".zip")){
+			if (mc.texturePackList.getHighestPriorityPack().fileName.endsWith(".zip")) {
 				temp.mkdirs();
-				UnzipUtility.unzip(mc.getMinecraftDir() + "/texturepacks/" + mc.texturePackList.selectedTexturePack.fileName, temp.getPath());
+				UnzipUtility.unzip(mc.getMinecraftDir() + "/texturepacks/" + mc.texturePackList.getHighestPriorityPack().fileName, temp.getPath());
 				music = new File(temp, musicLoc);
 			} else {
-				music = new File(mc.getMinecraftDir() + "/texturepacks/" + mc.texturePackList.selectedTexturePack.fileName + "/" + musicLoc);
+				music = new File(mc.getMinecraftDir() + "/texturepacks/" + mc.texturePackList.getHighestPriorityPack().fileName + "/" + musicLoc);
 			}
 
 			File[] list = music.listFiles();
@@ -65,7 +65,7 @@ public abstract class SoundManagerMixin implements IMusicLoader {
 				customResources = true;
                 for (File file : list) {
                     if (file.isFile()) {
-                        MusicLoader.LOGGER.info("Added " + file.getName() + " to music sound pool.");
+						MusicLoader.LOGGER.info("Added {} to music sound pool.", file.getName());
                         String s = file.getPath().substring(music.getPath().length() + 1).replace('\\', '/');
                         soundPool.addSound(s, file);
                     }

@@ -7,7 +7,7 @@ This allows you to load music through texture packs!
 
 ## Prerequisites
 
-- Minecraft BTA 7.1 pre2a
+- Minecraft BTA 7.2 pre2
 
 
 ## Usage instructions for texture pack creators
